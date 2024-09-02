@@ -1,19 +1,19 @@
 import { createClient } from 'redis';
 
 class RedisClient {
-  constructor () {
+  constructor() {
     this.client = createClient();
     this.client.on('error', (error) => {
       console.log(error.message);
     });
   }
 
-  isAlive () {
+  isAlive() {
     if (this.client.ready) return true;
     return false;
   }
 
-  async get (key) {
+  async get(key) {
     try {
       const value = await new Promise((resolve, reject) => {
         this.client.get(key, (err, val) => {
@@ -23,11 +23,11 @@ class RedisClient {
       });
       return value;
     } catch (err) {
-      console.log(err);
+      return err;
     }
   }
 
-  async set (key, value, dur) {
+  async set(key, value, dur) {
     try {
       await new Promise((resolve, reject) => {
         this.client.set(key, value, 'EX', dur, (err, val) => {
@@ -40,7 +40,7 @@ class RedisClient {
     }
   }
 
-  async del (key) {
+  async del(key) {
     try {
       await new Promise((resolve, reject) => {
         this.client.del(key, (err, val) => {
