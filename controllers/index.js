@@ -1,5 +1,5 @@
 import AppController from './AppController';
 
-module.exports = {
+export {
   AppController,
-};
+}
