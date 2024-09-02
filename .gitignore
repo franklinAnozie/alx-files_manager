@@ -2,3 +2,5 @@ __pycache__
 node_modules
 test.py
 main.py
+main.js
+test.js
