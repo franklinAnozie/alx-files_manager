@@ -10,7 +10,7 @@ class AuthController {
       if (!authHeaders || !authHeaders.startsWith('Basic ')) {
         return response.status(401).json({ error: 'Unauthorized' });
       }
-      const authCred = authHeaders.split('')[1];
+      const authCred = authHeaders.split(' ')[1];
       const credentials = Buffer.from(authCred, 'base64').toString('ascii');
       const [email, password] = credentials.split(':');
       if (!email || !password) return response.status(401).json({ error: 'Unauthorized' });
