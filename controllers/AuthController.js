@@ -7,12 +7,13 @@ class AuthController {
   static async getConnect(request, response) {
     try {
       const authHeaders = request.headers.authorization;
-      if (!authHeaders || !authHeaders.startswith('Basic ')) {
+      if (!authHeaders || !authHeaders.startsWith('Basic ')) {
         return response.status(401).json({ error: 'Unauthorized' });
       }
-
-      const authCred = authHeaders.split(' ')[1];
+      const authCred = authHeaders.split('')[1];
+      console.log(authCred);
       const credentials = Buffer.from(authCred, 'base64').toString('ascii');
+      console.log(credentials)
       const [email, password] = credentials.split(':');
       if (!email || !password) return response.status(401).json({ error: 'Unauthorized' });
       const hashedPassword = UsersController.hashPasswordSHA1(password);
@@ -26,6 +27,7 @@ class AuthController {
 
       return response.status(200).json({ token });
     } catch (error) {
+        console.log(error)
       return response.status(500).json({ error: 'Internal Server Error' });
     }
   }
